@@ -1,11 +1,49 @@
+from typing import cast
+
+
 def carica_da_file(file_path):
     """Carica le foto dal file, creando un nuovo anno ogni volta che compare per la prima volta"""
-    # TODO
+    try:
+        infile = open(file_path, "r")
+    except FileNotFoundError:
+        print ("None")
+    album = {}
+    primariga = True
+    for line in infile:
+        if primariga == True:
+            primariga = False
+            continue
+        parola = line.split(",").rstrip()
+        anno =  parola[4]
+        codice = parola[0]
+        titolo = parola[1]
+        mese = parola[3]
+        autore = parola[2]
+        album[codice] = anno
+        if anno not in album:
+            album[codice] = {}
+        else:
+            album[codice] = [titolo, autore, mese]
+    infile.close()
+    return album
+
+
 
 
 def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
     """Aggiunge una foto all'album, creando l'anno al volo se non è ancora presente"""
-    # TODO
+    try:
+        mesei = int(mese)
+        if mesei < 1 or mesei > 12:
+            return None
+    except ValueError:
+        print("None")
+    if anno in album and codice in album[codice]:
+
+    #try:
+        infile = open(file_path, "w")
+    #except FileNotFoundError:
+            #print ("None")
 
 
 def cerca_foto(album, codice):
